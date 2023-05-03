@@ -1,0 +1,273 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/admin/deactivate":
+    post:
+      summary: deactivate admin
+      tags:
+      - Admin
+      parameters: []
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              example:
+                id: 84e20de4-0dfb-4423-ab27-0f288c08216a
+                first_name: temi
+                last_name: suberu
+                email: temi@sube.com
+                role: admin
+                status: active
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+              required:
+              - id
+  "/api/v1/admin/activate":
+    post:
+      summary: activate admin
+      tags:
+      - Admin
+      parameters: []
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              example:
+                id: 84e20de4-0dfb-4423-ab27-0f288c08216a
+                first_name: temi
+                last_name: suberu
+                email: temi@sube.com
+                role: admin
+                status: active
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+              required:
+              - id
+  "/api/v1/admin":
+    post:
+      summary: create admin
+      tags:
+      - Admin
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                  description: first name
+                last_name:
+                  type: string
+                  description: last name
+                email:
+                  type: string
+                  description: email
+              required:
+              - first_name
+              - last_name
+              - email
+  "/api/v1/course":
+    get:
+      summary: list courses
+      tags:
+      - courses
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              example:
+                courses:
+                - id: f943ce6d-fc08-404c-9337-54284ceeae07
+                  name: Mechanical Design
+                  level: '500'
+                  lecturer: Mr Oyedeji
+                  code: MEG-502
+                  created_at: 2022-11-01 07:21:41 UTC
+                  updated_at: 2022-11-01 07:21:41 UTC
+                  file:
+                    url: http://localhost:3000/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaWszTkdReE9UbGtaQzFsT1RRekxUUTNPRE10T0dRMFppMWlNRFkzTkdNeE56YzFPRElHT2daRlZBPT0iLCJleHAiOm51bGwsInB1ciI6ImJsb2JfaWQifX0=--fd65f9031eb81ef45573a353d8302b41d2588c44/MEG502_RAIN_REG_LIST_1666787342.csv
+    post:
+      summary: create course
+      tags:
+      - courses
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: course name
+                level:
+                  type: string
+                  description: course level
+                lecturer:
+                  type: string
+                  description: course lecturer
+                code:
+                  type: string
+                  description: course code
+                course_file:
+                  type: string
+                  format: binary
+                  description: course file
+              required:
+              - name
+              - level
+              - lecturer
+              - code
+              - course_file
+    delete:
+      summary: delete course
+      tags:
+      - courses
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: successful
+  "/api/v1/halls":
+    get:
+      summary: list halls
+      tags:
+      - Halls
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              example:
+                halls:
+                - id: 4bbfa444-df6f-40dc-8558-7edbef8f8a6a
+                  name: CPE hall 1
+                  capacity: 40
+                  row_length: 3
+                  department: Computer Engineering
+                  bad_seats:
+                  - 3
+                  - 35
+    post:
+      summary: create hall
+      tags:
+      - Halls
+      parameters: []
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              example:
+                id: 4bbfa444-df6f-40dc-8558-7edbef8f8a6a
+                name: CPE hall 1
+                capacity: 40
+                row_length: 3
+                department: Computer Engineering
+                bad_seats:
+                - 3
+                - 35
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: CPE hall 1
+                capacity:
+                  type: integer
+                  example: 40
+                department:
+                  type: string
+                  example: Computer Engineering
+                hall_file:
+                  type: string
+                  format: binary
+                  description: hall file
+              required:
+              - name
+              - capacity
+              - department
+              - hall_file
+  "/api/v1/halls/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    delete:
+      summary: delete hall
+      tags:
+      - Halls
+      responses:
+        '200':
+          description: successful
+  "/api/v1/profile":
+    get:
+      summary: get current user profile
+      tags:
+      - Profile
+      responses:
+        '200':
+          description: successful
+  "/api/v1/users":
+    get:
+      summary: list users
+      tags:
+      - List users
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              example:
+                users:
+                - id: 84e20de4-0dfb-4423-ab27-0f288c08216a
+                  first_name: temi
+                  last_name: suberu
+                  email: temi@sube.com
+                  role: admin
+                  status: active
+servers:
+- url: https://{prodHost}
+  variables:
+    prodHost:
+      default: authservice-api.herokuapp.com
+- url: http://{localHost}
+  variables:
+    localHost:
+      default: localhost:3000
